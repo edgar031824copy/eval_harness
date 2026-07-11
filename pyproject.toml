@@ -1,0 +1,27 @@
+[project]
+name = "eval-harness"
+version = "0.1.0"
+description = "PoC: eval harness gating CI merges on prompt-file regressions (LIT-39)"
+requires-python = ">=3.11"
+dependencies = [
+    "anthropic>=0.40.0",
+    "pyyaml>=6.0",
+    "scipy>=1.13",
+    "sentence-transformers>=3.0",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0", "pytest-mock>=3.14"]
+
+[project.scripts]
+eval-harness = "eval_harness.cli:main"
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
