@@ -254,7 +254,7 @@ git commit -m "feat: add Anthropic client wrapper with token usage tracking"
 **Interfaces:**
 - Produces: `@dataclass GoldenExample {id: str, input: str, expected: str}`, `@dataclass GoldenSet {name: str, examples: list[GoldenExample]}`, `load_golden_set(path: str) -> GoldenSet`. Raises `GoldenSetError` (a plain `Exception` subclass) on missing/malformed fields. Later tasks (`replay`, `sampler`) consume `GoldenSet.examples`.
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 ```python
 # tests/test_golden_set.py
@@ -309,12 +309,12 @@ def test_load_rejects_empty_examples(tmp_path):
         load_golden_set(str(p))
 ```
 
-- [ ] **Step 2: Run test to verify it fails**
+- [x] **Step 2: Run test to verify it fails**
 
 Run: `pytest tests/test_golden_set.py -v`
 Expected: FAIL with `ModuleNotFoundError: No module named 'eval_harness.golden_set'`
 
-- [ ] **Step 3: Write minimal implementation**
+- [x] **Step 3: Write minimal implementation**
 
 ```python
 # src/eval_harness/golden_set.py
@@ -366,12 +366,12 @@ def load_golden_set(path: str) -> GoldenSet:
     return GoldenSet(name=raw["name"], examples=examples)
 ```
 
-- [ ] **Step 4: Run test to verify it passes**
+- [x] **Step 4: Run test to verify it passes**
 
 Run: `pytest tests/test_golden_set.py -v`
 Expected: PASS (3 passed)
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add src/eval_harness/golden_set.py tests/test_golden_set.py
