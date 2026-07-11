@@ -2,6 +2,10 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## Git commits
+
+**Never run `git commit` (or `git add` + `git commit`) for any task's work without Edgar's explicit confirmation first**, even if a prior task in this same plan was committed without asking. Implement and test the task, then stop and ask before committing — do not assume standing permission carries over from one task to the next.
+
 ## Commands
 
 ```bash

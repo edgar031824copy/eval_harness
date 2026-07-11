@@ -4,3 +4,4 @@ __pycache__/
 *.egg-info/
 .pytest_cache/
 baseline_store.json
+docs/superpowers/plans/2026-07-11-lit-39-eval-harness.md
