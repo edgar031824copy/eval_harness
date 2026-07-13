@@ -1,0 +1,139 @@
+# ~25 labeled examples used to calibrate the LLM judge before trusting it in CI.
+# human_verdict is Edgar's own judgment: "better" | "equivalent" | "worse".
+# Target: >90% agreement with run_calibration before shipping the judge (see
+# LIT-39 research: promptfoo's guidance is 30-50 examples / >90% agreement).
+examples:
+  # --- paraphrase-only changes (equivalent) ---
+  - task_input: "Summarize: The meeting covered Q3 budget and hiring plans."
+    expected: "Meeting discussed Q3 budget and hiring."
+    old_output: "The meeting was about the Q3 budget and hiring plans."
+    new_output: "The meeting covered Q3 budget and hiring plans."
+    human_verdict: equivalent
+  - task_input: "What's the capital of Japan?"
+    expected: "Tokyo"
+    old_output: "The capital of Japan is Tokyo."
+    new_output: "Tokyo."
+    human_verdict: equivalent
+  - task_input: "Extract the ticket key from: '[LIT-39] Eval Harness'"
+    expected: "LIT-39"
+    old_output: "LIT-39"
+    new_output: "The ticket key is LIT-39."
+    human_verdict: equivalent
+  - task_input: "How do I reset my password?"
+    expected: "Go to Settings > Security > Reset Password."
+    old_output: "Navigate to Settings, then Security, then click Reset Password."
+    new_output: "Go to Settings > Security > Reset Password."
+    human_verdict: equivalent
+  - task_input: "Is the store open on Sundays?"
+    expected: "Yes, open Sundays 10am-4pm."
+    old_output: "Yes, we're open Sundays from 10am to 4pm."
+    new_output: "Yes, Sundays 10am-4pm."
+    human_verdict: equivalent
+
+  # --- factual errors introduced (worse) ---
+  - task_input: "Is 17 a prime number?"
+    expected: "Yes, 17 is prime."
+    old_output: "Yes, 17 is a prime number."
+    new_output: "No, 17 is not prime."
+    human_verdict: worse
+  - task_input: "Translate 'good morning' to Spanish."
+    expected: "Buenos días"
+    old_output: "Buenos días"
+    new_output: "Buenas noches"
+    human_verdict: worse
+  - task_input: "What year did World War II end?"
+    expected: "1945"
+    old_output: "World War II ended in 1945."
+    new_output: "World War II ended in 1944."
+    human_verdict: worse
+  - task_input: "How many days are in a leap year?"
+    expected: "366 days"
+    old_output: "A leap year has 366 days."
+    new_output: "A leap year has 365 days, same as a normal year."
+    human_verdict: worse
+  - task_input: "What is 12 * 12?"
+    expected: "144"
+    old_output: "12 * 12 = 144"
+    new_output: "12 * 12 = 142"
+    human_verdict: worse
+
+  # --- format-only changes (equivalent) ---
+  - task_input: "List the primary colors."
+    expected: "Red, blue, and yellow."
+    old_output: "Red, blue, and yellow."
+    new_output: "- Red\n- Blue\n- Yellow"
+    human_verdict: equivalent
+  - task_input: "Give today's date format example."
+    expected: "MM/DD/YYYY, e.g. 07/12/2026"
+    old_output: "The format is MM/DD/YYYY (example: 07/12/2026)."
+    new_output: "Format: MM/DD/YYYY — example: 07/12/2026"
+    human_verdict: equivalent
+  - task_input: "What's included in the starter kit?"
+    expected: "A cable, adapter, and manual."
+    old_output: "The starter kit includes a cable, an adapter, and a manual."
+    new_output: "Starter kit contents: cable, adapter, manual."
+    human_verdict: equivalent
+  - task_input: "How do I contact support?"
+    expected: "Email support@example.com or call 1-800-555-0100."
+    old_output: "You can email support@example.com or call 1-800-555-0100."
+    new_output: "Contact us via email (support@example.com) or phone (1-800-555-0100)."
+    human_verdict: equivalent
+  - task_input: "State the boiling point of water at sea level."
+    expected: "100°C (212°F)"
+    old_output: "Water boils at 100°C (212°F) at sea level."
+    new_output: "100°C, which is 212°F."
+    human_verdict: equivalent
+
+  # --- dropped required fields / instructions (worse) ---
+  - task_input: "What's your refund policy if I cancel after 2 weeks?"
+    expected: "I don't have information about the refund policy — please contact support directly."
+    old_output: "I don't have that information — please contact support directly."
+    new_output: "You should be eligible for a full refund."
+    human_verdict: worse
+  - task_input: "Do you support SSO login?"
+    expected: "No, SSO login is not currently supported."
+    old_output: "No, SSO login is not currently supported."
+    new_output: "Yes, SSO should work fine, just try logging in with your provider."
+    human_verdict: worse
+  - task_input: "Summarize the contract termination clause."
+    expected: "Either party may terminate with 30 days written notice."
+    old_output: "Either party may terminate the contract with 30 days written notice."
+    new_output: "The contract can be terminated by either party."
+    human_verdict: worse
+  - task_input: "What's the maximum file upload size?"
+    expected: "25MB per file."
+    old_output: "The maximum upload size is 25MB per file."
+    new_output: "There's a file size limit, check the docs for details."
+    human_verdict: worse
+  - task_input: "List the steps to reset a forgotten password."
+    expected: "1) Click 'Forgot password' 2) Check email 3) Click reset link 4) Enter new password."
+    old_output: "1) Click 'Forgot password' 2) Check your email 3) Click the reset link 4) Enter a new password."
+    new_output: "Check your email for a reset link."
+    human_verdict: worse
+
+  # --- genuine quality improvements (better) ---
+  - task_input: "Explain what an API rate limit is."
+    expected: "A cap on how many requests a client can make in a given time window."
+    old_output: "It's a limit on requests."
+    new_output: "A rate limit caps how many API requests a client can make within a given time window, e.g. 100 requests per minute, to prevent overload."
+    human_verdict: better
+  - task_input: "Why did my payment fail?"
+    expected: "Common causes: insufficient funds, expired card, or bank decline."
+    old_output: "Payments can fail for several reasons."
+    new_output: "Payments commonly fail due to insufficient funds, an expired card, or your bank declining the charge — check your card details or contact your bank."
+    human_verdict: better
+  - task_input: "What is 2+2?"
+    expected: "4"
+    old_output: "The answer is 4, I think."
+    new_output: "4"
+    human_verdict: better
+  - task_input: "How do I export my data?"
+    expected: "Yes, CSV export is available on all plans."
+    old_output: "You might be able to export data."
+    new_output: "Yes, CSV export is available on all plans — go to Settings > Export."
+    human_verdict: better
+  - task_input: "Can free plan users invite team members?"
+    expected: "No, team invites require the Pro plan."
+    old_output: "Not sure, depends on the plan."
+    new_output: "No, team invites require the Pro plan — free plan is single-user only."
+    human_verdict: better
