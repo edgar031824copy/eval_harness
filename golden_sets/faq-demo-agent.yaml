@@ -1,0 +1,17 @@
+name: faq-demo-agent
+examples:
+  - id: free-plan-limit
+    input: "How many projects can I create on the free plan?"
+    expected: "Up to 3 projects on the free plan."
+  - id: pro-plan-price
+    input: "How much does the Pro plan cost and what does it add?"
+    expected: "Pro plan is $12/month and adds unlimited projects plus team roles."
+  - id: export-format
+    input: "Can I export my data, and in what format?"
+    expected: "Yes, CSV export is available on all plans."
+  - id: sso-support
+    input: "Do you support SSO login?"
+    expected: "No, SSO login is not currently supported."
+  - id: unanswerable-refund-policy
+    input: "What's your refund policy if I cancel Pro after 2 weeks?"
+    expected: "I don't have information about the refund policy — please contact support directly."

@@ -1,0 +1,24 @@
+# Dogfoods our own SKILL.md (Task 12's registry entry) — mirrors LIT-38's
+# pattern of using the built system on itself. Inputs are realistic
+# invocations of the skill; "expected" is a structural checklist (does the
+# response include these steps?) rather than exact prose, since the skill's
+# output is a plan of action, not a single fact.
+name: jira-ticket-kickoff
+examples:
+  - id: fresh-ticket
+    input: "I have a new ticket LIT-40, an XML export at ./LIT-40.xml, no prior memory exists. What should I do?"
+    expected: >
+      Should describe: parsing the ticket XML for key/summary/ACs, checking
+      for prior project-context memory first, running deep-research via the
+      Workflow tool on the ticket's technical domain (not the ticket text),
+      saving the report as lit-40-state-of-the-art.md with per-finding AC
+      tags plus a Landscape Map and PoC Design Implications section, then
+      writing a lit-40-project-context.md memory file with the established
+      frontmatter and section structure.
+  - id: resuming-ticket
+    input: "I'm picking back up LIT-38 — there's already a project-context memory for it. What's next?"
+    expected: >
+      Should describe: read the existing project-context memory first, skip
+      re-running research (it's already banked), and resume from wherever
+      the Task Progress checklist left off, updating the same memory file
+      going forward rather than starting a new kickoff arc.
